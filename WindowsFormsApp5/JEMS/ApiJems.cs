@@ -141,50 +141,60 @@ namespace WindowsFormsApp5
 
         public static (RestResponse, string) ExecuteApi(string server, string resource, string username, string password, Method reqMethod, string token = null, dynamic jsonBody = null)
         {
-            RestClientOptions options;
-
-            if(token is null)
+            try
             {
-                options = new RestClientOptions(server)
+                RestClientOptions options;
+
+                if (token is null)
                 {
-                    Authenticator = new HttpBasicAuthenticator(username, password)
-                };
-            }
-            else
-            {
-                options = new RestClientOptions("https://kwi-stg.jemsms.corp.jabil.org/api-external-api");
-            }
-
-
-            var client = new RestClient(options);
-            var request = new RestRequest(resource, reqMethod);
-            if(token != null) request.AddCookie("UserToken", token, "/", "kwi-stg.jemsms.corp.jabil.org");
-            // The cancellation token comes from the caller. You can still make a call without it.
-
-            if (jsonBody != null)
-            {
-                string jsonMess;
-                switch (jsonBody)
-                {
-                    case object a when a.GetType() == typeof(JObject):
-                        jsonMess = ((JObject)jsonBody).ToString(); break;
-                    case object a when a.GetType() == typeof(string):
-                        jsonMess = jsonBody; break;
-                    default: jsonMess = JsonConvert.SerializeObject(jsonBody); break;
+                    options = new RestClientOptions(server)
+                    {
+                        Authenticator = new HttpBasicAuthenticator(username, password)
+                    };
                 }
-                request.AddStringBody(jsonMess, DataFormat.Json);
-                //request.AddParameter("application/json", jsonMess, ParameterType.RequestBody);
+                else
+                {
+                    options = new RestClientOptions("https://kwi-stg.jemsms.corp.jabil.org/api-external-api");
+                }
+
+
+                var client = new RestClient(options);
+                var request = new RestRequest(resource, reqMethod);
+                if (token != null) request.AddCookie("UserToken", token, "/", "kwi-stg.jemsms.corp.jabil.org");
+                // The cancellation token comes from the caller. You can still make a call without it.
+
+                if (jsonBody != null)
+                {
+                    string jsonMess;
+                    switch (jsonBody)
+                    {
+                        case object a when a.GetType() == typeof(JObject):
+                            jsonMess = ((JObject)jsonBody).ToString(); break;
+                        case object a when a.GetType() == typeof(string):
+                            jsonMess = jsonBody; break;
+                        default: jsonMess = JsonConvert.SerializeObject(jsonBody); break;
+                    }
+                    request.AddStringBody(jsonMess, DataFormat.Json);
+                    //request.AddParameter("application/json", jsonMess, ParameterType.RequestBody);
+                }
+
+
+                var timer = StartTimer();
+                RestResponse answer = client.Execute(request);
+                string elapsedTime = StopTimer(timer);
+
+                if (!answer.IsSuccessful)
+                    MessageBox.Show(new Form { TopLevel = true, TopMost = true }, answer.Content, answer.StatusCode.ToString());
+
+                return (answer, elapsedTime);
+            }            
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
             }
+            return (null, null);
 
-
-            var timer = StartTimer();
-            RestResponse answer = client.Execute(request);
-            string elapsedTime = StopTimer(timer);
-
-            if (!answer.IsSuccessful)
-                MessageBox.Show(new Form { TopLevel = true, TopMost = true }, answer.Content, answer.StatusCode.ToString());
-
-            return (answer, elapsedTime);
         }
 
 

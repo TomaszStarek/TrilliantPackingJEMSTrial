@@ -55,11 +55,12 @@ namespace WindowsFormsApp5
             }
             return true;
         }
-        public static bool PackUnpackSnJEMS(string sn,string cointainer, string packUnpack, bool closeCointainer)
+        public static bool PackUnpackSnJEMS(string sn,string cointainer, string packUnpack, bool closeCointainer, bool executePrintTrigger)
         {
             Form1._myWindow.StopScannerCheckBoard();
             Form1._myWindow.StopScannerForPackout();
-            cointainer = "JR00000032";
+            // cointainer = "JR00000032";
+
             try
             {
 
@@ -71,7 +72,7 @@ namespace WindowsFormsApp5
                 { "routeStepName", "PACKOUT" },
                 { "routeVersion", "1" },
                  { $"wipsTo{packUnpack}", new JArray($"{sn}") },
-                { "executePrintTrigger", true }
+                { "executePrintTrigger", executePrintTrigger }
             };
                 var pack = ApiJems.ExecuteApiTestBody(ApiJems.Token, "/api/Packout/WipDualPackUnpack", Method.Post, body);
 
@@ -120,11 +121,69 @@ namespace WindowsFormsApp5
             }
             return true;
         }
+        public static bool GetContainerNumber(string sn)
+        {
+            try
+            {
+                var cointainers = ApiJems.ExecuteApiTestBody(ApiJems.Token, $"/api/containers/containerhierarchy/contentsByWip/external?SiteCode=kwi&WipSerialNumber={sn}&CustomerId=14", Method.Get);
+                //ContainerJems = "JR00000058";
+                //return true;
+                if (cointainers.Item1.IsSuccessful)
+                {
+                    var cointainersResponse = JsonConvert.DeserializeObject<Data.ContainerBySn>(cointainers.Item1.Content);
+                    ContainerJems = cointainersResponse.ContainerNumber;
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show(new Form { TopLevel = true, TopMost = true }, $"Nie udało się pobrać numeru kontenera!!! Nie ma do czego pakować numerów, zrestartuj aplikację", "Błąd Jems Api");
+                    ContainerJems = "";
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(new Form { TopLevel = true, TopMost = true }, $"Błąd przy tworzeniu konteneru JEMS!!!", ex.Message);
+                return false;
+            }
+
+        }
+
+        public static bool CheckIsNumberIsPacked(string sn)
+        {
+            //if (ContainerJems == "JR00000058")
+            //    return true;
+
+            var cointainers = ApiJems.ExecuteApiTest(ApiJems.Token, $"/api/containers/containerhierarchy/contentsByWip/external?SiteCode=kwi&WipSerialNumber={sn}&CustomerId=14", Method.Get);
+
+            if (cointainers.Item1.IsSuccessful)
+            {
+                var cointainersResponse = JsonConvert.DeserializeObject<Data.ContainerBySn>(cointainers.Item1.Content);
+                if(ContainerJems == cointainersResponse.ContainerNumber)
+                    return true;
+                else
+                {
+                    MessageBox.Show(new Form { TopLevel = true, TopMost = true }, $"Sprawdź czy ten numer: {sn} jest spakowany do poprawnego kontenera!", "Błąd numeru kontenera");
+                    ContainerJems = "";
+                    return false;
+                }
+
+            }
+            else
+            {
+                MessageBox.Show(new Form { TopLevel = true, TopMost = true }, $"Nie udało się pobrać numeru kontenera!!! Numer prawdopodobnie nie jest spakowany", "Błąd Jems Api");
+                ContainerJems = "";
+                return false;
+            }
+        }
+
+
         public static bool GetOpenCointainer()
         {
             try
             {
-                var cointainers = ApiJems.ExecuteApiTestBody(ApiJems.Token, $"api/containers/GetOpenContainerByType?SiteId=10&CustomerId=14", Method.Get);
+                var cointainers = ApiJems.ExecuteApiTest(ApiJems.Token, $"api/containers/GetOpenContainerByType?SiteId=10&CustomerId=14", Method.Get);
                 var cointainersResponse = JsonConvert.DeserializeObject<List<Data.GetOpenCointainer>>(cointainers.Item1.Content);
                 
                 var firstEmptyCointainer = cointainersResponse.Where(x => x.QuantityPacked == 0 && x.ContainerType == Nc).FirstOrDefault();

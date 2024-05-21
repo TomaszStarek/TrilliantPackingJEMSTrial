@@ -1,3 +1,20 @@
-Barkod NEQA6480313, już jest zeskanowany! 2024-05-16 13-01-52
-Zamknięto aplikację podczas pakowania 2024-05-16 13-16-19
-Zamknięto aplikację podczas pakowania 2024-05-16 13-17-10
+Wciśnięto przycisk SKAN_OK 2024-05-20 14-06-38
+Barkod NEQA6514839, już jest zeskanowany! 2024-05-20 14-16-17
+Barkod NEQA6514298, już jest zeskanowany! 2024-05-20 14-16-22
+Barkod NEQA6514832, już jest zeskanowany! 2024-05-20 14-16-40
+Barkod NEQA6514848, już jest zeskanowany! 2024-05-20 14-16-44
+PLC Alarm Door Open (otworzone drzwii) 2024-05-20 14-52-43
+PLC Alarm Empty Pieces Detected (Wykrycie pustych slotów/bez płytki) 2024-05-20 14-52-43
+PLC Alarm Home needed (Homowanie) 2024-05-20 14-52-43
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6515776 jest ignorowany! 2024-05-20 14-52-46
+Zamknięto aplikację podczas pakowania 2024-05-20 14-57-53
+Zamknięto aplikację podczas pakowania 2024-05-20 14-59-31
+Zamknięto aplikację podczas pakowania 2024-05-20 14-59-31
+Zamknięto aplikację podczas pakowania 2024-05-20 15-00-12
+Zamknięto aplikację podczas pakowania 2024-05-20 15-01-21
+Zamknięto aplikację podczas pakowania 2024-05-20 15-01-21
+Zamknięto aplikację podczas pakowania 2024-05-20 15-02-02
+Zamknięto aplikację podczas pakowania 2024-05-20 15-02-02
+Zamknięto aplikację podczas pakowania 2024-05-20 15-05-13
+Zamknięto aplikację podczas pakowania 2024-05-20 15-05-14
+Zamknięto aplikację podczas pakowania 2024-05-20 15-06-31

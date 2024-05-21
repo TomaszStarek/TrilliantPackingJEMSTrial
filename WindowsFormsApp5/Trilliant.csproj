@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Attributes.cs" />
+    <Compile Include="Data\ContainerBySn.cs" />
     <Compile Include="Data\CreateCointainer.cs" />
     <Compile Include="Data\GetOpenCointainer.cs" />
     <Compile Include="Data\OkToStart.cs" />

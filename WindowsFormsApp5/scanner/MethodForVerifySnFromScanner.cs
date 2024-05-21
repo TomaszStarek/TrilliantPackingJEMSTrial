@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp5.Data;
 using WindowsFormsApp5.mes;
 
 namespace WindowsFormsApp5
@@ -102,7 +103,24 @@ namespace WindowsFormsApp5
                             var kuk = new ApiJems();
 
                             var a = kuk.GetTokenSync("stg");
-                         //   Form1.aTimer.Enabled = true;
+
+
+                            if (ApiJems.Token.Length < 5)
+                            {
+                                MessageBox.Show(new Form { TopLevel = true, TopMost = true }, "Api token nie został pobrany!!!", "Błąd Token!");
+                                _poprzedniBarcode = "";
+                                return "";
+                            }
+                            BoxToPackaut.GetOpenCointainer();
+
+                            if (BoxToPackaut.ContainerJems.Length < 5)
+                            {
+                                MessageBox.Show(new Form { TopLevel = true, TopMost = true }, "Aplikacja nie pobrała numeru kontera!!!", "Błąd kontenera");
+                                _poprzedniBarcode = "";
+                                return "";
+                            }
+
+                            //   Form1.aTimer.Enabled = true;
                             //if (BoxToPackaut.CheckPeelTest() != 0)
                             //{
                             //    Task.Run(() => WebApi.LinkByLinkStation()).Wait();

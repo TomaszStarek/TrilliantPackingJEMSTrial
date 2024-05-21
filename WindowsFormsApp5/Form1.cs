@@ -118,6 +118,11 @@ namespace WindowsFormsApp5
            scannerForCheckBoards = new ScannerForCheckBoards("COM11", textBox1, labelScanOut,
                         labelCountVerifiedPiecesToBox, labelStatusInfo, buttonWygenerujBarcode, BtnErrorOccursAccept);
 
+            StopScannerCheckBoard();
+            StopScannerForPackout();
+
+            var k = new ApiJems();
+            var a = k.GetTokenSync("stg");
 
             if (File.Exists(@"parametry.txt"))
             {
@@ -127,6 +132,12 @@ namespace WindowsFormsApp5
             if (File.Exists(@"packedbarcodes.txt"))
             {
                 _counterPiecesInBox = BoxToPackaut.ReadPackoutSn();
+
+                if(_counterPiecesInBox > 0)
+                {
+                    BoxToPackaut.GetContainerNumber(BoxToPackaut.ListOfScannedBarcodesVerified[0]);
+                }
+
                 ChangeControl.UpdateControl(labelCountPackedPieces, _counterPiecesInBox.ToString(), true);
             }
             if (File.Exists(@"errors.txt"))
@@ -155,8 +166,7 @@ namespace WindowsFormsApp5
                 }
             }
         //    SetTimer();
-            var k = new ApiJems();
-            var a = k.GetTokenSync("stg");
+
    //             aTimer.Start();
             //  PLC.InitEvent();
             if (scannerForCheckBoards.Port.IsOpen)
@@ -180,19 +190,31 @@ namespace WindowsFormsApp5
 
         public void RunScannerCheckBoard()
         {
-            scannerForCheckBoards.Port.Write("LON\r");
+            if (scannerForCheckBoards.Port.IsOpen)
+            {
+                scannerForCheckBoards.Port.Write("LON\r");
+            }
         }
         public void RunScannerForPackout()
         {
-            scannerForPackout.Port.Write("LON\r");
+            if (scannerForPackout.Port.IsOpen)
+            {
+                scannerForPackout.Port.Write("LON\r");
+            }
         }
         public void StopScannerCheckBoard()
         {
-            scannerForCheckBoards.Port.Write("LOFF\r");
+            if (scannerForCheckBoards.Port.IsOpen)
+            {
+                scannerForCheckBoards.Port.Write("LOFF\r");
+            }
         }
         public void StopScannerForPackout()
         {
-            scannerForPackout.Port.Write("LOFF\r");
+            if (scannerForPackout.Port.IsOpen)
+            {
+                scannerForPackout.Port.Write("LOFF\r");
+            }
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -257,7 +279,7 @@ namespace WindowsFormsApp5
 
         private void ClearAllData()
         {
-            BoxToPackaut.PackUnpackSnMultipleJEMS(BoxToPackaut.ListOfScannedBarcodesPacked, BoxToPackaut.ContainerJems, "UnPack", false);
+          //  BoxToPackaut.PackUnpackSnMultipleJEMS(BoxToPackaut.ListOfScannedBarcodesPacked, BoxToPackaut.ContainerJems, "UnPack", false);
             BoxToPackaut.ContainerJems = "";
             var result = BoxToPackaut.ClearEverything();
             BoxToPackaut.ContainerJems = "";
@@ -581,8 +603,11 @@ namespace WindowsFormsApp5
 
             var tt = ApiJems.Token;
 
-
-            BoxToPackaut.PackUnpackSnJEMS("NEQA6482063", "JR00000032", "UnPack", false);
+            var cointainers2 = ApiJems.ExecuteApiTestBody(ApiJems.Token, $"/api/containers/containerhierarchy/contentsByWip/external?SiteCode=kwi&WipSerialNumber={"NEQA6481051"}&CustomerId=14", Method.Get);
+            var cointainers = ApiJems.ExecuteApiTestBody(ApiJems.Token, $"api/containers/GetOpenContainerByType?SiteId=10&CustomerId=14", Method.Get);
+            //       BoxToPackaut.GetOpenCointainer();
+       //     BoxToPackaut.GetContainerNumber("NEQA8660011");
+         //   BoxToPackaut.PackUnpackSnJEMS("NEQA8660011", "JR00000055", "Pack", false);
 
             //   var task1 = Task.Run(() => WebApi.CallApiWithCookie());
 
