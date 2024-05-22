@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -99,7 +101,8 @@ namespace WindowsFormsApp5
                     {
                         if(BoxToPackaut.ListOfScannedBarcodesVerified.Count == 0)
                         {
-                          //  Form1.aTimer.Enabled = false;
+                            Form1._myWindow.StopScannerCheckBoard();
+                            //  Form1.aTimer.Enabled = false;
                             var kuk = new ApiJems();
 
                             var a = kuk.GetTokenSync("stg");
@@ -108,18 +111,21 @@ namespace WindowsFormsApp5
                             if (ApiJems.Token.Length < 5)
                             {
                                 MessageBox.Show(new Form { TopLevel = true, TopMost = true }, "Api token nie został pobrany!!!", "Błąd Token!");
+                                Form1._myWindow.RunScannerCheckBoard();
                                 _poprzedniBarcode = "";
                                 return "";
                             }
-                            BoxToPackaut.GetOpenCointainer();
+
+                            BoxToPackaut.GetOpenCointainer(_lineReadIn);
 
                             if (BoxToPackaut.ContainerJems.Length < 5)
                             {
                                 MessageBox.Show(new Form { TopLevel = true, TopMost = true }, "Aplikacja nie pobrała numeru kontera!!!", "Błąd kontenera");
+                                Form1._myWindow.RunScannerCheckBoard();
                                 _poprzedniBarcode = "";
                                 return "";
                             }
-
+                            Form1._myWindow.RunScannerCheckBoard();
                             //   Form1.aTimer.Enabled = true;
                             //if (BoxToPackaut.CheckPeelTest() != 0)
                             //{

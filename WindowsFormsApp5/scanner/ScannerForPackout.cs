@@ -20,6 +20,7 @@ namespace WindowsFormsApp5
         private Button _buttonWygenerujBarcode;
         private Button _btnErrorOccursAccept;
 
+        private int _counter = 0;
         private string _lineReadIn = "";
         private string _poprzedniBarcode;
         public int _counterPiecesPacked = 0;
@@ -114,6 +115,7 @@ namespace WindowsFormsApp5
 
             if (_lineReadIn.Length == 11 && !_lineReadIn.Contains("ER") && (!_lineReadIn.Equals(_poprzedniBarcode) )) //|| !Form1.ScanOkScannerPackout 
             {
+                _counter = 0;
                 var checkSnCanBeAddedToPackedList = PackoutMethodsForCheckSn.CheckSnCanBeAddedToPackedList(_lineReadIn);
                 if (checkSnCanBeAddedToPackedList == 0)
                 {
@@ -126,6 +128,9 @@ namespace WindowsFormsApp5
 
                         BoxToPackaut.AddSnToPackoutListAndWriteToFile(_lineReadIn);
                         // Form1.ScanOkScannerPackout = true;
+
+                        var ujh = BoxToPackaut.ListOfScannedBarcodesVerified.IndexOf(_lineReadIn);
+                        var uhj2 = BoxToPackaut.ListOfScannedBarcodesPacked.IndexOf(_lineReadIn);
 
                         if (BoxToPackaut.ListOfScannedBarcodesPacked.Count > 294 &&
                          BoxToPackaut.ListOfScannedBarcodesVerified.IndexOf(_lineReadIn) == BoxToPackaut.ListOfScannedBarcodesPacked.IndexOf(_lineReadIn))
@@ -160,6 +165,8 @@ namespace WindowsFormsApp5
                                 executeTrigger = true;
                                 closeContainer = true;
                             }
+                            if (BoxToPackaut.ContainerJems.Length < 5)
+                                BoxToPackaut.GetOpenCointainer(_lineReadIn);
                             if (BoxToPackaut.PackUnpackSnJEMS(_lineReadIn, BoxToPackaut.ContainerJems, "Pack", closeContainer, executeTrigger))
                                 Form1.ScanOkScannerPackout = true;
                             else
@@ -244,8 +251,13 @@ namespace WindowsFormsApp5
                     {
                         ChangeControl.UpdateControl(_labelStatusInfo, Color.HotPink, "Zweryfikowano i spakowano 300 sztuk!", true);
 
-                        if(Form1.MoreThan300piecesScanned == true)
-                            ChangeControl.UpdateControl(_btnErrorOccursAccept, Color.DeepPink, "Wystąpiły błędy podczas pakowania!\nZaakceptuj wyskakujący komunikat!", true);
+                        if (Form1.MoreThan300piecesScanned == true)
+                        {
+                            //ChangeControl.UpdateControl(_btnErrorOccursAccept, Color.DeepPink, "Wystąpiły błędy podczas pakowania!\nZaakceptuj wyskakujący komunikat!", true);
+                            MessageBox.Show("Zrobić hold z tego boxa!!!!!!!!");
+                        }
+                        else
+                            ChangeControl.UpdateControl(_buttonWygenerujBarcode, Color.DeepPink, "Wygeneruj Barkody!", true);
                     }
                     
                 }
@@ -262,7 +274,22 @@ namespace WindowsFormsApp5
                 }
 
             }
-          //  Form1._myWindow.RunScannerForPackout();
+            else
+            {
+                if (_counter > 5)
+                {
+                    _counter = 0;
+                    _poprzedniBarcode = "";
+                    return;
+                }
+                else
+                {
+                    _counter++;
+                }
+            }
+            //  Form1._myWindow.RunScannerForPackout();
+
+
             _poprzedniBarcode = _lineReadIn;
             _lineReadIn = string.Empty;
         }

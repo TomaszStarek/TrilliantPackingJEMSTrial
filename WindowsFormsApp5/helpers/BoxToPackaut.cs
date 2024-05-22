@@ -186,7 +186,7 @@ namespace WindowsFormsApp5
                 var cointainers = ApiJems.ExecuteApiTest(ApiJems.Token, $"api/containers/GetOpenContainerByType?SiteId=10&CustomerId=14", Method.Get);
                 var cointainersResponse = JsonConvert.DeserializeObject<List<Data.GetOpenCointainer>>(cointainers.Item1.Content);
                 
-                var firstEmptyCointainer = cointainersResponse.Where(x => x.QuantityPacked == 0 && x.ContainerType == Nc).FirstOrDefault();
+                var firstEmptyCointainer = cointainersResponse.Where(x => x.QuantityPacked == 0 && x.ContainerTypeItem == Nc).FirstOrDefault();
 
                 if (firstEmptyCointainer != null)
                 {
@@ -207,6 +207,40 @@ namespace WindowsFormsApp5
             if(ContainerJems.Length > 2) { return true; }
             else { return false; }
         }
+
+        public static bool GetOpenCointainer(string sn)
+        {
+            try
+            {
+                var WipId = ApiJems.ExecuteApiTestBody(ApiJems.Token, $"api/Wips/GetWipIdBySerialNumber?SiteName=Kwidzyn&CustomerName=TRILLIANT&SerialNumber={sn}", Method.Get);
+                var WipIdResults = JsonConvert.DeserializeObject<List<Data.WipIdResults>>(WipId.Item1.Content);
+                Nc = WipIdResults.FirstOrDefault().MaterialName;
+
+                var cointainers = ApiJems.ExecuteApiTest(ApiJems.Token, $"api/containers/GetOpenContainerByType?SiteId=10&CustomerId=14", Method.Get);
+                var cointainersResponse = JsonConvert.DeserializeObject<List<Data.GetOpenCointainer>>(cointainers.Item1.Content);
+
+                var firstEmptyCointainer = cointainersResponse.Where(x => x.QuantityPacked == 0 && x.ContainerTypeItem == Nc).FirstOrDefault();
+
+                if (firstEmptyCointainer != null)
+                {
+                    ContainerJems = firstEmptyCointainer.ContainerNumber;
+                }
+                else
+                {
+                    // ContainerJems = "JR00000032";
+                    CreateCointainerJEMS();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(new Form { TopLevel = true, TopMost = true }, $"Błąd przy tworzeniu konteneru JEMS!!!", ex.Message);
+                return false;
+            }
+
+            if (ContainerJems.Length > 2) { return true; }
+            else { return false; }
+        }
+
 
         public static void AddSnToPackoutListAndWriteToFile(string snToAdd)
         {
@@ -488,6 +522,9 @@ namespace WindowsFormsApp5
 
         public static bool CheckNumbers(string client)
         {
+
+
+
             List<string> listToCompare = new List<string>();
             var webservices = new WebServices();
             try

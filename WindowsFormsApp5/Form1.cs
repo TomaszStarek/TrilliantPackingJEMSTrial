@@ -113,7 +113,7 @@ namespace WindowsFormsApp5
             Application.ApplicationExit += new EventHandler(OnApplicationExit);
             _myWindow = this;
 
-            scannerForPackout = new ScannerForPackout("COM10", textBox3, labelScanOut2,labelCountPackedPieces,labelScanInfoPAK, labelStatusInfo, buttonWygenerujBarcode, BtnErrorOccursAccept);
+            scannerForPackout = new ScannerForPackout("COM10", textBox3, labelScanOut2,labelCountPackedPieces,labelScanInfoPAK, labelStatusInfo, buttonIfMesDoneThenPlcDone, BtnErrorOccursAccept);
 //4 i 7
            scannerForCheckBoards = new ScannerForCheckBoards("COM11", textBox1, labelScanOut,
                         labelCountVerifiedPiecesToBox, labelStatusInfo, buttonWygenerujBarcode, BtnErrorOccursAccept);
@@ -190,31 +190,63 @@ namespace WindowsFormsApp5
 
         public void RunScannerCheckBoard()
         {
-            if (scannerForCheckBoards.Port.IsOpen)
+            try
             {
-                scannerForCheckBoards.Port.Write("LON\r");
+                if (scannerForCheckBoards.Port.IsOpen)
+                {
+                    scannerForCheckBoards.Port.Write("LON\r");
+                }
+            }
+            catch (Exception)
+            {
+                ;
             }
         }
         public void RunScannerForPackout()
         {
-            if (scannerForPackout.Port.IsOpen)
+            try
             {
-                scannerForPackout.Port.Write("LON\r");
+                if (scannerForPackout.Port.IsOpen)
+                {
+                    scannerForPackout.Port.Write("LON\r");
+                }
             }
+            catch (Exception)
+            {
+                ;
+            }
+
         }
         public void StopScannerCheckBoard()
         {
-            if (scannerForCheckBoards.Port.IsOpen)
+            try
             {
-                scannerForCheckBoards.Port.Write("LOFF\r");
+                if (scannerForCheckBoards.Port.IsOpen)
+                {
+                    scannerForCheckBoards.Port.Write("LOFF\r");
+                }
             }
+            catch (Exception)
+            {
+
+               ;
+            }
+
         }
         public void StopScannerForPackout()
         {
-            if (scannerForPackout.Port.IsOpen)
+            try
             {
-                scannerForPackout.Port.Write("LOFF\r");
+                if (scannerForPackout.Port.IsOpen)
+                {
+                    scannerForPackout.Port.Write("LOFF\r");
+                }
             }
+            catch (Exception)
+            {
+                ;
+            }
+
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -533,22 +565,11 @@ namespace WindowsFormsApp5
         {
             try
             {
-                if (frm2 != null && frm != null)
-                    if (!frm2.Confirmed)
-                    {
-                        MessageBox.Show(new Form { TopLevel = true, TopMost = true }, "Zaakceptuj drugą część barkodu!");
-                    }
-                    else
-                    {
-                        if (!frm.Confirmed)
-                            MessageBox.Show(new Form { TopLevel = true, TopMost = true }, "Zaakceptuj pierwszą część barkodu!");
-                        else
-                        {
-                            ChangeControl.UpdateControl(labelStatusInfo, Color.Plum, "Barkody poprawnie zaakceptowane, sprawdzam numery w MES!", true);
+                            ChangeControl.UpdateControl(labelStatusInfo, Color.Plum, "Barkody zeskanowane, sprawdzam numery w JEMS!", true);
                             Thread.Sleep(100);
-                            var res = CheckHistory.CheckAllNumbers(labelStatusInfo, labelUTR, buttonWygenerujBarcode, labelBarcode1Accepted,
-                                        labelBarcode2Accepted, ref _counterPiecesInBox, labelCountVerifiedPiecesToBox, labelScanInfoPAK, labelCountPackedPieces, buttonIfMesDoneThenPlcDone, BtnErrorOccursAccept);
-                            if (res)
+                            //var res = CheckHistory.CheckAllNumbers(labelStatusInfo, labelUTR, buttonWygenerujBarcode, labelBarcode1Accepted,
+                            //            labelBarcode2Accepted, ref _counterPiecesInBox, labelCountVerifiedPiecesToBox, labelScanInfoPAK, labelCountPackedPieces, buttonIfMesDoneThenPlcDone, BtnErrorOccursAccept);
+                            //if (true)
                             {
                                 var result = PLC.DintToZero("PROGRAM:MainProgram.App_Mes_Error_Occurred_int");
 
@@ -568,14 +589,9 @@ namespace WindowsFormsApp5
                                 textBox2.Visible = true;
                             }
                                 
-                        }
+                        
 
-                    }
-                else
-                {
-                    ChangeControl.UpdateControl(labelStatusInfo, Color.Red, "Wpierw wygeneruj i zaakceptuj barkody!", true);
-                    MessageBox.Show(new Form { TopLevel = true, TopMost = true }, "Wpierw wygeneruj i zaakceptuj barkody!");
-                }
+
 
             }
             catch (Exception ex)

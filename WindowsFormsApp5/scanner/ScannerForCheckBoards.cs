@@ -40,6 +40,8 @@ namespace WindowsFormsApp5
                 _lineReadIn += Port.ReadExisting();
                 Thread.Sleep(25);
             }
+
+ //           Form1._myWindow.StopScannerForPackout();
             string res = "";
          //   if(_poprzedniBarcode != _lineReadIn)
             res = MethodForVerifySnFromScanner.DataReceivedOperations(ref _lineReadIn, ref _poprzedniBarcode, ref _counterPiecesInBox, _labelScanOut,
@@ -55,8 +57,6 @@ namespace WindowsFormsApp5
                 _poprzedniBarcode = "";
                 Form1._myWindow.RunScannerCheckBoard();
             }
-
-
 
 
             _lineReadIn = string.Empty;

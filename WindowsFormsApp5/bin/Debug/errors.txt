@@ -1,20 +1,32 @@
-Wciśnięto przycisk SKAN_OK 2024-05-20 14-06-38
-Barkod NEQA6514839, już jest zeskanowany! 2024-05-20 14-16-17
-Barkod NEQA6514298, już jest zeskanowany! 2024-05-20 14-16-22
-Barkod NEQA6514832, już jest zeskanowany! 2024-05-20 14-16-40
-Barkod NEQA6514848, już jest zeskanowany! 2024-05-20 14-16-44
-PLC Alarm Door Open (otworzone drzwii) 2024-05-20 14-52-43
-PLC Alarm Empty Pieces Detected (Wykrycie pustych slotów/bez płytki) 2024-05-20 14-52-43
-PLC Alarm Home needed (Homowanie) 2024-05-20 14-52-43
-Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6515776 jest ignorowany! 2024-05-20 14-52-46
-Zamknięto aplikację podczas pakowania 2024-05-20 14-57-53
-Zamknięto aplikację podczas pakowania 2024-05-20 14-59-31
-Zamknięto aplikację podczas pakowania 2024-05-20 14-59-31
-Zamknięto aplikację podczas pakowania 2024-05-20 15-00-12
-Zamknięto aplikację podczas pakowania 2024-05-20 15-01-21
-Zamknięto aplikację podczas pakowania 2024-05-20 15-01-21
-Zamknięto aplikację podczas pakowania 2024-05-20 15-02-02
-Zamknięto aplikację podczas pakowania 2024-05-20 15-02-02
-Zamknięto aplikację podczas pakowania 2024-05-20 15-05-13
-Zamknięto aplikację podczas pakowania 2024-05-20 15-05-14
-Zamknięto aplikację podczas pakowania 2024-05-20 15-06-31
+Barkod NEQA6514825, już jest zeskanowany! 2024-05-21 13-29-06
+Barkod NEQA6514825, już jest zeskanowany! 2024-05-21 13-29-07
+Barkod NEQA6514825, już jest zeskanowany! 2024-05-21 13-29-08
+Barkod NEQA6514976, już jest zeskanowany! 2024-05-21 13-29-11
+Barkod NEQA6514976, już jest zeskanowany! 2024-05-21 13-29-12
+Barkod NEQA6514976, już jest zeskanowany! 2024-05-21 13-29-14
+Zamknięto aplikację podczas pakowania 2024-05-21 13-30-03
+Barkod NEQA6514311, już jest zeskanowany! 2024-05-21 13-30-24
+Barkod NEQA6514311, już jest zeskanowany! 2024-05-21 13-30-26
+Barkod NEQA6514163, już jest zeskanowany! 2024-05-21 13-30-29
+Barkod NEQA6514163, już jest zeskanowany! 2024-05-21 13-30-30
+Zamknięto aplikację podczas pakowania 2024-05-21 13-36-40
+Zamknięto aplikację podczas pakowania 2024-05-21 13-37-37
+Zamknięto aplikację podczas pakowania 2024-05-21 13-37-37
+Zamknięto aplikację podczas pakowania 2024-05-21 13-42-25
+Zamknięto aplikację podczas pakowania 2024-05-21 13-42-25
+Zamknięto aplikację podczas pakowania 2024-05-21 13-49-40
+Zamknięto aplikację podczas pakowania 2024-05-21 13-50-06
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-13
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-14
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-17
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-19
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-22
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-24
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-25
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-28
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-29
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-31
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-32
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-33
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-36
+Partia już zawiera 300 sztuk! Zeskanowany numerNEQA6514832 jest ignorowany! 2024-05-21 13-59-48

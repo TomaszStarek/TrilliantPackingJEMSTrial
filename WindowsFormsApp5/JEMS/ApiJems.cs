@@ -200,6 +200,8 @@ namespace WindowsFormsApp5
 
         public static (RestResponse, string) ExecuteApiTest(string token, string resorce, Method method)
         {
+            Form1._myWindow.StopScannerCheckBoard();
+            Form1._myWindow.StopScannerForPackout();
           //  Form1.aTimer.Stop();
             //    var authenticator = new JwtAuthenticator(token);
             var options = new RestClientOptions("https://kwi-stg.jemsms.corp.jabil.org/api-external-api")
@@ -242,6 +244,9 @@ namespace WindowsFormsApp5
             if (!answer.IsSuccessful)
                 MessageBox.Show(new Form { TopLevel = true, TopMost = true }, answer.Content, answer.StatusCode.ToString());
 
+            Form1._myWindow.RunScannerCheckBoard();
+            Form1._myWindow.RunScannerForPackout();
+
             return (answer, elapsedTime);
         }
 
@@ -259,6 +264,10 @@ namespace WindowsFormsApp5
                 password = secretSection["Password"]?.ToString();
                 username = secretSection["Username"]?.ToString();
             }
+
+            //server = "http://AWECN1WEB85/api-external-api";
+            //username = "SVCKWI_JEMSMSAPIPRD";
+            //password = "a)hcul3f!@~@nK5KdZcV5TGzI";
 
             (RestResponse response, string apiTime) = ExecuteApi(server , "/api/user/signin", username, password, Method.Get);
 

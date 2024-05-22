@@ -37,6 +37,8 @@ namespace WindowsFormsApp5
 
         public static bool checkSnHistoryJEMS(string sn)
         {
+            Form1._myWindow.StopScannerCheckBoard();
+            Form1._myWindow.StopScannerForPackout();
             var timer = API_JEMS.StartTimer();
 
 
@@ -67,6 +69,9 @@ namespace WindowsFormsApp5
             var operationHistories = task2.Result;
             var attribiutes = task3.Result;
 
+
+            Form1._myWindow.RunScannerCheckBoard();
+            Form1._myWindow.RunScannerForPackout();
             return true;
             BoxToPackaut.Nc = WipIdResults.FirstOrDefault().MaterialName;
 
